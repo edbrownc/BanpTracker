@@ -1,0 +1,15 @@
+main {
+  flex: 1;
+}
+
+main ul {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+@media (max-width: 600px) {
+  main ul {
+    grid-template-columns: 1fr;
+  }
+}
