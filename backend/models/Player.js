@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 
 const PlayerSchema = new mongoose.Schema({
-  p_id: String,
+  r6_id: String,
+  uplay_name: String,
+  apex_id: String,
+  origin_name: String,
   name: String,
   email: String,
-  uplay_name: String,
-  avatar_url: String
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 module.exports = mongoose.model('Player', PlayerSchema);

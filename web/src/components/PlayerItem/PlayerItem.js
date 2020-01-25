@@ -1,12 +1,14 @@
 import React from 'react';
-import champions from '../../images/champions.svg';
 import './PlayerItem.css';
 
 const PlayerItem = ({ player }) => {
   return (
     <li className="player-item">
       <header>
-        <img src={champions} alt="" />
+        <img
+          src={require(`../../images/ranks/${player.p_currentrank}.svg`)}
+          alt=""
+        />
         <div className="player-info">
           <strong>{player.p_name}</strong>
           <ul>
