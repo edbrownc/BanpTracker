@@ -6,24 +6,24 @@ const User = require('../models/User');
 
 module.exports = {
   async store(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     const { uplay_name, username } = req.body;
-
-    if (!uplay_name)
-      return res.status(404).json({ msg: 'Please provide your uplay name.' });
-
-    if (!username)
-      return res.status(404).json({ msg: 'Please provide your username.' });
 
     let player = await Player.findOne({ origin_name });
 
     if (player)
       return res
-        .status(404)
+        .status(422)
         .json({ msg: `${origin_name} already registered.` });
 
     const user = await User.findOne({ username });
 
-    if (!user) return res.status(404).json({ msg: 'User not found.' });
+    if (!user) return res.status(422).json({ msg: 'User not found.' });
 
     playerInfo = await axios
       .get(
@@ -41,7 +41,7 @@ module.exports = {
 
     if (!p_id)
       return res
-        .status(404)
+        .status(422)
         .json({ msg: 'Player not found. Please check your UPlay name.' });
 
     player = await Player.create({
@@ -57,7 +57,7 @@ module.exports = {
     const playersArray = await Player.find();
 
     if (!playersArray)
-      return res.status(404).json({ msg: 'No players found.' });
+      return res.status(422).json({ msg: 'No players found.' });
 
     await Promise.all(
       playersArray.map(async player => {
